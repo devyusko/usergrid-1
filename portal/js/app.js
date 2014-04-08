@@ -210,8 +210,8 @@ angular.module('appservices', ['ngRoute',
       // Allow same origin resource loads.
       'self',
       // Allow loading from our assets domain.  Notice the difference between * and **.
-      'http://apigee-internal-prod.jupiter.apigee.net/**',
-      'http://apigee-internal-prod.mars.apigee.net/**',
+      'https://apigee-internal-prod.jupiter.apigee.net/**',
+      'https://apigee-internal-prod.mars.apigee.net/**',
       'https://appservices.apigee.com/**',
       'https://api.usergrid.com/**'
     ]);
