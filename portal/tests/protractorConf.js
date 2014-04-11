@@ -37,7 +37,7 @@ exports.config = {
   // The address of a running selenium server. If specified, Protractor will
   // connect to an already running instance of selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
-  seleniumAddress:  'http://localhost:4445/wd/hub'
+  seleniumAddress:  'http://localhost:4445/wd/hub',
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
   // The tests will be run remotely using SauceLabs.
  // sauceUser: 'safeldm',
@@ -63,9 +63,9 @@ exports.config = {
   // and
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
   capabilities: {
-    'build': process.env('TRAVIS_BUILD_NUMBER'),
-    'tags': [process.env('TRAVIS_PYTHON_VERSION'), 'CI'],
-    'tunnel-identifier': process.env('TRAVIS_JOB_NUMBER'),
+    'build': process.env['TRAVIS_BUILD_NUMBER'],
+    'tags': [process.env['TRAVIS_PYTHON_VERSION'], 'CI'],
+    'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
     'browserName': 'chrome',
     'browserName': 'internet explorer',
     'browserName': 'firefox'
