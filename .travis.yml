@@ -10,6 +10,6 @@ addons:
   sauce_connect:
     username: "fasterness"
     access_key:
-    	secure: "Rzxc6i3QXdIwDLl4PT4GzEPokkdFh5PSWsFlXqE1KL14ALt07Jg0AuwjBHo08+hRwx29uT3InoXGCpmufE591/Qrnp2IHlRsKClXDoUcwvV74INImJgvDwy4fXEpdP65i8qN0Xdgo05MQ5iU1gWb2dJDCfQchvjaIQ7QBlUGEzo="
+      secure: "Rzxc6i3QXdIwDLl4PT4GzEPokkdFh5PSWsFlXqE1KL14ALt07Jg0AuwjBHo08+hRwx29uT3InoXGCpmufE591/Qrnp2IHlRsKClXDoUcwvV74INImJgvDwy4fXEpdP65i8qN0Xdgo05MQ5iU1gWb2dJDCfQchvjaIQ7QBlUGEzo="
 before_script:
   - "cd portal"
