@@ -9,6 +9,9 @@
     "url": "https://github.com/usergrid/usergrid.git"
   },
   "dependencies": {},
+    "scripts": {
+    "test": "grunt e2e"
+  },
   "devDependencies": {
     "grunt": "~0.4.4",
     "grunt-cli": "~0.1.11",
