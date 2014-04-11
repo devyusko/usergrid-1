@@ -62,14 +62,14 @@ exports.config = {
   // https://code.google.com/p/selenium/wiki/DesiredCapabilities
   // and
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
+    // 'build': process.env['TRAVIS_BUILD_NUMBER'],
+    // 'tags': ['CI'],
   capabilities: {
-    'build': process.env['TRAVIS_BUILD_NUMBER'],
-    'tags': ['CI'],
-    'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
     'browserName': 'chrome',
     'browserName': 'internet explorer',
-    'browserName': 'firefox'
-  //  'browserName': 'phantomjs'
+    'browserName': 'firefox',
+   'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
+   //  'browserName': 'phantomjs'
   },
   params: {
     login: {
