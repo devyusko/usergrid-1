@@ -9,7 +9,6 @@ node_js:
 addons:
   sauce_connect:
     username: "fasterness"
-    access_key:
-      secure: "Rzxc6i3QXdIwDLl4PT4GzEPokkdFh5PSWsFlXqE1KL14ALt07Jg0AuwjBHo08+hRwx29uT3InoXGCpmufE591/Qrnp2IHlRsKClXDoUcwvV74INImJgvDwy4fXEpdP65i8qN0Xdgo05MQ5iU1gWb2dJDCfQchvjaIQ7QBlUGEzo="
+    access_key: "128690e9-57c0-485c-9728-464a08acbf69"
 before_script:
   - "cd portal && npm i && grunt"
