@@ -1,0 +1,15 @@
+env:
+  global:
+    - secure: "Al5FuEPE1pcadZNiWNcPyz3DZw7aFnBu/4qi8l7/K6IpmpvuOcDRDbhNqZaosfWSzE6AiVYlKXOSi9wafIjxUQ77W2o8iTi0TL/vEl3uoYB8Ne/4F4HL7CIZHFWv2QzlBHpiUJMo8mctUIHYns9/cM7Le4WGlpInNMMcjTzrhIQ="
+    - secure: "JrjTYKr32SadmQQGLl4aj6CnrUJuMGLOjEl6VjQWZEkgWU2+L7gdF09z1LbdsPh7Gz5/FnkRiYZTl5Ssl0gbY/F9veTGP4K+5MLYaOeFdZ6QJ6MAnFRKzwxSOqjgT9IrIknzojCi06I0VGyDFrrt9JhK+Sbx5Iv7koK76e2CpWE="
+language: node_js
+node_js:
+  - "0.11"
+  - "0.10"
+addons:
+  sauce_connect:
+    username: "fasterness"
+    access_key:
+    	secure: "Rzxc6i3QXdIwDLl4PT4GzEPokkdFh5PSWsFlXqE1KL14ALt07Jg0AuwjBHo08+hRwx29uT3InoXGCpmufE591/Qrnp2IHlRsKClXDoUcwvV74INImJgvDwy4fXEpdP65i8qN0Xdgo05MQ5iU1gWb2dJDCfQchvjaIQ7QBlUGEzo="
+before_script:
+  - "cd portal"

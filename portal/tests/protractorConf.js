@@ -37,11 +37,13 @@ exports.config = {
   // The address of a running selenium server. If specified, Protractor will
   // connect to an already running instance of selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
-  seleniumAddress:  'http://localhost:4444/wd/hub',
+  seleniumAddress:  'http://localhost:4445/wd/hub'
   // If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
   // The tests will be run remotely using SauceLabs.
  // sauceUser: 'safeldm',
  // sauceKey: 'a3388a50-0ddb-4f90-8f81-4baa5bc839e1',
+ // sauceUser: 'fasterness',
+ // sauceKey: '128690e9-57c0-485c-9728-464a08acbf69',
   // The timeout for each script run on the browser. This should be longer
   // than the maximum time your application needs to stabilize between tasks.
   allScriptsTimeout: 30000,
@@ -61,8 +63,12 @@ exports.config = {
   // and
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
   capabilities: {
-    'browserName': 'chrome'
-  //  'browserName': 'firefox'
+    'build': process.env('TRAVIS_BUILD_NUMBER'),
+    'tags': [process.env('TRAVIS_PYTHON_VERSION'), 'CI'],
+    'tunnel-identifier': process.env('TRAVIS_JOB_NUMBER'),
+    'browserName': 'chrome',
+    'browserName': 'internet explorer',
+    'browserName': 'firefox'
   //  'browserName': 'phantomjs'
   },
   params: {
