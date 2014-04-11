@@ -64,7 +64,7 @@ exports.config = {
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
   capabilities: {
     'build': process.env['TRAVIS_BUILD_NUMBER'],
-    'tags': [process.env['TRAVIS_PYTHON_VERSION'], 'CI'],
+    'tags': ['CI'],
     'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
     'browserName': 'chrome',
     'browserName': 'internet explorer',
