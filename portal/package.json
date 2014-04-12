@@ -10,7 +10,7 @@
   },
   "dependencies": {},
     "scripts": {
-    "test": "grunt e2e-chrome"
+    "test": "grunt e2e-travis"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
