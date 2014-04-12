@@ -66,7 +66,7 @@ exports.config = {
     'browserName': 'chrome',
     'browserName': 'internet explorer',
     'browserName': 'firefox',
-    'browserName': 'phantomjs',
+    // 'browserName': 'phantomjs',
     'build': process.env['TRAVIS_BUILD_NUMBER'],
     'tags': ['CI'],
     'tunnel-identifier': process.env['TRAVIS_JOB_NUMBER'],
