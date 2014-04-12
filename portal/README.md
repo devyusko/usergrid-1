@@ -1,3 +1,4 @@
+#Usergrid Portal [ ![Build Status](https://travis-ci.org/r3b/usergrid-1.svg?branch=travis-ci) ](https://travis-ci.org/r3b/usergrid-1)
 ##Overview
 This is an open-source Javascript-based console application for Usergrid called the *admin portal*. The admin portal is the primary administrative user interface for working with Usergrid.
 
@@ -23,7 +24,7 @@ If you are just running the portal:
 
 1. Install Node.js from http://nodejs.org/download/.
 2. From the root directory, run `./build.sh dev`.
-3. This will build and run a lightweight server. Naviate to http://localhost:3000
+3. This will build and run a lightweight server. Navigate to http://localhost:3000
 4. If that doesn't work, in dist is a built copy and a file called rel-usergrid-portal.zip. Unzip and deploy to your favorite web server.
 
 If you are developing:

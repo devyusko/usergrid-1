@@ -42,8 +42,6 @@ exports.config = {
   // The tests will be run remotely using SauceLabs.
  // sauceUser: 'safeldm',
  // sauceKey: 'a3388a50-0ddb-4f90-8f81-4baa5bc839e1',
- // sauceUser: 'fasterness',
- // sauceKey: '128690e9-57c0-485c-9728-464a08acbf69',
   // The timeout for each script run on the browser. This should be longer
   // than the maximum time your application needs to stabilize between tasks.
   allScriptsTimeout: 30000,
