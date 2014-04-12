@@ -241,6 +241,13 @@ module.exports = function (grunt) {
           baseUrl:'http://localhost:3005/'
         }
       },
+      travis: {
+        options: {
+          args: {
+            baseUrl:'http://localhost:3006/?noHelp=true'
+          }
+        }
+      },
       phantom: {
         options: {
           args: {
@@ -441,6 +448,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['build']);
 
   grunt.registerTask('e2e', ['connect:e2e-phantom','protractor:phantom']);
+  grunt.registerTask('e2e-travis', ['connect:e2e-chrome','protractor:travis']);
   grunt.registerTask('e2e-chrome', ['connect:e2e-chrome','protractor:chrome']);
   grunt.registerTask('e2e-coverage', ['clean:coverage', 'connect:e2e-coverage','protractor:coverage']);
   grunt.registerTask('e2e-coverage-chrome', ['clean:coverage', 'connect:e2e-coverage-chrome','protractor:chrome', 'makeReport']);
