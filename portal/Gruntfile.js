@@ -245,7 +245,6 @@ module.exports = function (grunt) {
         options: {
           args: {
             baseUrl:'http://appservices.apigee.com/mars/',
-            browser: 'chrome',
             params:{
               useSso:true,
               orgName:'apijeep'
@@ -257,7 +256,6 @@ module.exports = function (grunt) {
         options: {
           args: {
             baseUrl:'http://appservices.apigee.com/mars/',
-            browser: 'chrome',
             params:{
               useSso:true,
               orgName:'apijeep'
