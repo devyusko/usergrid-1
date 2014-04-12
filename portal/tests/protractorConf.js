@@ -63,8 +63,8 @@ exports.config = {
   capabilities: {
     'username': 'fasterness',
     'accessKey': '128690e9-57c0-485c-9728-464a08acbf69',
-    'browserName': 'chrome',
-    // 'browserName': 'internet explorer',
+    // 'browserName': 'chrome',
+    'browserName': 'internet explorer',
     // 'browserName': 'firefox',
     // 'browserName': 'phantomjs',
     'build': process.env['TRAVIS_BUILD_NUMBER'],
