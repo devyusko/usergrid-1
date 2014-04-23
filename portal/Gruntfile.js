@@ -241,6 +241,28 @@ module.exports = function (grunt) {
           baseUrl:'http://localhost:3005/'
         }
       },
+      travis: {
+        options: {
+          args: {
+            baseUrl:'http://appservices.apigee.com/mars/',
+            params:{
+              useSso:true,
+              orgName:'apijeep'
+            }
+          }
+        }
+      },
+      'travis-mars': {
+        options: {
+          args: {
+            baseUrl:'http://appservices.apigee.com/mars/',
+            params:{
+              useSso:true,
+              orgName:'apijeep'
+            }
+          }
+        }
+      },
       phantom: {
         options: {
           args: {
@@ -331,7 +353,7 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-        build: ['dist/','dist-cov/','test/', 'js/*.min.js',templateFile,'index.html','index-debug.html'],
+        build: ['dist/','dist-cov/','test/', 'js/*.min.js',templateFile],
         coverage: ['reports/']
     },
     dom_munger: {
@@ -408,7 +430,13 @@ module.exports = function (grunt) {
         dir: 'reports',
         print: 'detail'
       }
-    }
+    },
+    coveralls: {
+      options: {
+        src: 'reports/**/*.info',
+        force: true
+      },
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -426,6 +454,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-dom-munger');
   grunt.loadNpmTasks('grunt-s3');
   grunt.loadNpmTasks('grunt-istanbul');
+  grunt.loadNpmTasks('grunt-coveralls');
 
   // Default task(s).
   grunt.registerTask('dev', ['connect:server', 'watch']);
@@ -441,9 +470,10 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['build']);
 
   grunt.registerTask('e2e', ['connect:e2e-phantom','protractor:phantom']);
+  grunt.registerTask('e2e-travis', ['connect:e2e-chrome','protractor:travis-mars', 'coveralls']);
   grunt.registerTask('e2e-chrome', ['connect:e2e-chrome','protractor:chrome']);
-  grunt.registerTask('e2e-coverage', ['clean:coverage', 'connect:e2e-coverage','protractor:coverage']);
-  grunt.registerTask('e2e-coverage-chrome', ['clean:coverage', 'connect:e2e-coverage-chrome','protractor:chrome', 'makeReport']);
+  grunt.registerTask('e2e-coverage', ['clean:coverage', 'build-coverage', 'connect:e2e-coverage','protractor:coverage', 'coveralls']);
+  grunt.registerTask('e2e-coverage-chrome', ['clean:coverage', 'build-coverage', 'connect:e2e-coverage-chrome','protractor:chrome', 'makeReport', 'coveralls']);
   grunt.registerTask('e2e-firefox', ['connect:e2e-firefox','protractor:firefox']);
   grunt.registerTask('e2e-prod', ['protractor:prod']);
   grunt.registerTask('e2e-mars', ['protractor:mars']);

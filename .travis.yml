@@ -1,0 +1,26 @@
+env:
+  global:
+  - secure: qahZcfpfZsKjjTs8l8WXwek6RYmQZrjtDfurPyNhvzcdV0liWX3ADHwIf4VlLCrQ1eg5kWX1EbX/BAAwnMiPNcmdBsV+SNP6H/QUubNhYDgotCDE6hQJ9eXhdJp4M2P+KJUXl6sopL0bGUCg2WROQ/ssmURFvoW+ZI80l4IP6sY=
+  - secure: RX7/vhKLNJZLHossnhuBz/RVLzPAeiAT37IZWBnz79qqJsfOw+6H1P+lJxdgdDL9JWgG7Yf6zzN/KZi4xaoYEULc1O72Unipgt56TYllxw/fnH4jM0ekYxpR7UP7d9WfltGbh+wzJ9yjzVU0qJg6QftWPRzNFN5gtgpIQKuQygM=
+language: java
+jdk:
+- oraclejdk7
+addons:
+  sauce_connect:
+    username:
+      secure: Qlkw6/L2UPfAlVfmbeIUwBO9eO2rYXdyBMpkn12qinrfnJqCRh7ZaRxGpsbR9MsqxPVxz5VCp9fhEYpjJSR2SqVQAf/v/kM2IQ2QyRLSQJGin4bLQRxVF/o68fqvLsYk3Qgedd4eMI77hNh0cv5LY4zBK/NvbvKE1eNz+qYSah8=
+    access_key:
+      secure: JmU0aIyzzDkc0FE+yPRS4d2k7QBfsm75ELHM7U+W/j/ZJhetL7DbjziYSreXcdxaqT7EzDpNywk4QiPzDp/jwGZ1sgcnvksFBwDwcu8uT78Vge0+Q/0LBaCRxyTcBk39K2FKw0tiVEmOJ47WOg0d0nDsZFeXjBgaFZ0JsNI8uKE=
+script:
+- cd stack
+- mvn package  -q -DMAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=512m" 2>&1 | egrep -v '^log4j'
+- cd ../portal
+- npm i
+- grunt build e2e-travis
+- cd ../sdks
+- cd html5-javascript
+- npm i
+- grunt test
+- cd ../nodejs
+- npm i
+- node test.js
