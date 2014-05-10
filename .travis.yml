@@ -12,15 +12,11 @@ addons:
     access_key:
       secure: JmU0aIyzzDkc0FE+yPRS4d2k7QBfsm75ELHM7U+W/j/ZJhetL7DbjziYSreXcdxaqT7EzDpNywk4QiPzDp/jwGZ1sgcnvksFBwDwcu8uT78Vge0+Q/0LBaCRxyTcBk39K2FKw0tiVEmOJ47WOg0d0nDsZFeXjBgaFZ0JsNI8uKE=
 script:
-- cd stack
-- MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=512m"
-- mvn package -q 2>&1 | egrep -v '^log4j'
-- cd ../portal
+- cd portal
 - npm i
 - grunt build e2e-travis
-- cd ../sdks/html5-javascript
-- npm i
-- grunt test
-- cd ../nodejs
-- npm i
-- node test.js
+- cd ../stack
+- MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=512m"
+- mvn package -DskipTests-q 2>&1 | egrep -v '^log4j'
+after_success:
+  - mvn test cobertura:cobertura coveralls:cobertura -q 2>&1 | egrep -v '^log4j'

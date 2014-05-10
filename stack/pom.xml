@@ -1377,6 +1377,21 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.eluder.coveralls</groupId>
+      <artifactId>coveralls-maven-plugin</artifactId>
+      <version>2.2.0</version>
+      <!-- <configuration>
+          <repoToken>yourcoverallsprojectrepositorytoken</repoToken>
+      </configuration> -->
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.6</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -1387,8 +1402,7 @@
           <artifactId>sonar-maven-plugin</artifactId>
           <version>2.1</version>
         </plugin>
-
-        <!--
+       <!--
                 <plugin>
                   <groupId>com.structure101.java</groupId>
                   <artifactId>maven-structure101-plugin</artifactId>
@@ -1750,6 +1764,25 @@
         <artifactId>sonar-maven-plugin</artifactId>
       </plugin>
 
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.6</version>
+          <configuration>
+              <format>xml</format>
+              <maxmem>256m</maxmem>
+              <!-- aggregated reports for multi-module projects -->
+              <aggregate>true</aggregate>
+          </configuration>
+      </plugin>
+        <plugin>
+            <groupId>org.eluder.coveralls</groupId>
+            <artifactId>coveralls-maven-plugin</artifactId>
+            <version>2.2.0</version>
+            <!-- <configuration>
+                <repoToken>yourcoverallsprojectrepositorytoken</repoToken>
+            </configuration> -->
+        </plugin>
 
         <plugin>
             <groupId>org.apache.rat</groupId>
