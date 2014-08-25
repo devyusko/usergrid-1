@@ -26,7 +26,7 @@
 
   <!-- Override these properties in your settings.xml in an active profile -->
   <properties>
-    <services.it.forkCount>3</services.it.forkCount>
+    <services.it.forkCount>1</services.it.forkCount>
     <services.it.reuseForks>true</services.it.reuseForks>
     <services.it.parallel>suites</services.it.parallel>
   </properties>
@@ -103,8 +103,8 @@
                 <storage-config>${basedir}/src/test/conf</storage-config>
                 <target.directory>${project.build.directory}</target.directory>
               </systemPropertyVariables>
-
-			<parallel>${services.it.parallel}</parallel>
+              <forkMode>always</forkMode>
+		         <parallel>${services.it.parallel}</parallel>
             <forkCount>${services.it.forkCount}</forkCount>
             <reuseForks>${services.it.reuseForks}</reuseForks>
 
@@ -455,7 +455,7 @@
       <!-- Testing and Logging Dependencies -->
     <dependency>
       <!--
-      Do not remove this slf4j-api dependency remove even though pulled 
+      Do not remove this slf4j-api dependency remove even though pulled
       in transitively. If not present IntelliJ IDEA wigs out.
       -->
       <groupId>org.slf4j</groupId>

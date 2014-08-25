@@ -55,6 +55,7 @@
                                 <storage-config>${basedir}/src/test/conf</storage-config>
                                 <target.directory>${project.build.directory}</target.directory>
                             </systemPropertyVariables>
+                            <forkMode>always</forkMode>
 
                             <forkCount>${rest.it.forkCount}</forkCount>
                             <reuseForks>${rest.it.reuseForks}</reuseForks>

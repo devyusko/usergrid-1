@@ -26,7 +26,7 @@
 
   <properties>
     <!-- Up to 30x parallelism can be used -->
-    <core.it.forkCount>3</core.it.forkCount>
+    <core.it.forkCount>1</core.it.forkCount>
     <core.it.reuseForks>false</core.it.reuseForks>
     <core.it.parallel>suites</core.it.parallel>
     <core.it.suite.concurrency>1</core.it.suite.concurrency>
@@ -64,11 +64,12 @@
                 <target.directory>${project.build.directory}</target.directory>
                 <suite.concurrency>${core.it.suite.concurrency}</suite.concurrency>
               </systemPropertyVariables>
-
+              <forkMode>always</forkMode>
               <parallel>${core.it.parallel}</parallel>
               <forkCount>${core.it.forkCount}</forkCount>
               <reuseForks>${core.it.reuseForks}</reuseForks>
-              <argLine>-Xmx${ug.heapmax} -Xms${ug.heapmin} -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -javaagent:${settings.localRepository}/com/github/stephenc/jamm/0.2.5/jamm-0.2.5.jar ${ug.argline}
+
+              <argLine>-Xmx${ug.heapmax} -Xms${ug.heapmin} -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -javaagent:${settings.localRepository}/com/github/stephenc/jamm/0.2.5/jamm-0.2.5.jar
               </argLine>
 
               <includes>
@@ -78,7 +79,7 @@
                 <include>**/*IT.java</include>
                 <include>**/*Test.java</include>
               </includes>
-              
+
               <excludes>
                 <exclude>**/Core*Suite.java</exclude>
                 <exclude>**/ConcurrentSchedulerITSuite.java</exclude>
@@ -140,21 +141,21 @@
                     <include>**/*.sh</include>
                     <include>**/stack.json</include>
                     <include>**/*.properties</include>
-                    <include>**/*.xml</include> 
+                    <include>**/*.xml</include>
                 </includes>
             </resource>
         </resources>
 
-        <testResources> 
-            <testResource> 
-                <directory>src/test/resources</directory> 
-                <filtering>true</filtering> 
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
                 <includes>
                     <include>**/*.yaml</include>
-                    <include>**/*.properties</include> 
-                    <include>**/*.xml</include> 
-                </includes> 
-            </testResource> 
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </testResource>
         </testResources>
 
     <plugins>
@@ -170,7 +171,7 @@
           <parallel>classes</parallel>
           <forkCount>${core.it.forkCount}</forkCount>
           <reuseForks>${core.it.reuseForks}</reuseForks>
-          <argLine>-Xmx${ug.heapmax} -Xms${ug.heapmin} -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -javaagent:${settings.localRepository}/com/github/stephenc/jamm/0.2.5/jamm-0.2.5.jar ${ug.argline}</argLine>
+          <argLine>-Xmx${ug.heapmax} -Xms${ug.heapmin} -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -javaagent:${settings.localRepository}/com/github/stephenc/jamm/0.2.5/jamm-0.2.5.jar</argLine>
 
           <includes>
             <include>**/*ConcurrentCoreITSuite.java</include>
@@ -545,42 +546,11 @@
         <version>2.0.0-SNAPSHOT</version>
     </dependency>
 
-        <dependency>
-            <groupId>org.apache.usergrid.chop</groupId>
-            <artifactId>chop-stack</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-    -->
-
     <dependency>
-      <groupId>com.codahale.metrics</groupId>
-      <artifactId>metrics-core</artifactId>
-      <version>${metrics.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.codahale.metrics</groupId>
-      <artifactId>metrics-graphite</artifactId>
-      <version>${metrics.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.netflix.rxjava</groupId>
-      <artifactId>rxjava-core</artifactId>
-      <version>${rx.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.netflix.rxjava</groupId>
-      <artifactId>rxjava-math</artifactId>
-      <version>${rx.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.clearspring.analytics</groupId>
-      <artifactId>stream</artifactId>
-      <version>2.7.0</version>
-    </dependency>
+        <groupId>org.apache.usergrid.chop</groupId>
+        <artifactId>chop-stack</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </dependency>-->
 
   </dependencies>
 

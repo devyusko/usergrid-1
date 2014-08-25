@@ -897,7 +897,7 @@ public abstract class AbstractIteratingQueryIT {
         long stop = System.currentTimeMillis();
 
         LOG.info( "Writes took {} ms", stop - start );
-
+        Thread.sleep(3000);
         app.getEm().refreshIndex();
 
         Query query = new Query();
