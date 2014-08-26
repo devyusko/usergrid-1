@@ -17,6 +17,7 @@
 package org.apache.usergrid.persistence.query;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.apache.usergrid.CoreApplication;
 import org.apache.usergrid.persistence.index.query.Query;
@@ -25,7 +26,7 @@ import org.apache.usergrid.persistence.Results;
 
 /** @author tnine */
 public class AllInConnectionNoTypeIT extends AbstractIteratingQueryIT {
-
+	@Ignore
     @Test
     public void allInConnectionNoType() throws Exception {
         allIn( new ConnectionNoTypeHelper(app) );

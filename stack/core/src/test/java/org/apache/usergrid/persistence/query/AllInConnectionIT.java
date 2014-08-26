@@ -17,11 +17,13 @@
 package org.apache.usergrid.persistence.query;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
 /** @author tnine */
 public class AllInConnectionIT extends AbstractIteratingQueryIT {
+	@Ignore
     @Test
     public void allInConnection() throws Exception {
         allIn( new ConnectionHelper(app) );

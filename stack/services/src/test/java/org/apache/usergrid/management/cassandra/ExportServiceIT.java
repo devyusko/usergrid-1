@@ -565,7 +565,7 @@ public class ExportServiceIT {
     }
 
 
-    //@Ignore("file created won't be deleted when running tests")
+    @Ignore("file created won't be deleted when running tests")
     @Test
     public void testExportOneOrganization() throws Exception {
 
@@ -592,6 +592,7 @@ public class ExportServiceIT {
             userProperties.put( "username", "billybob" + i );
             userProperties.put( "email", "test" + i + "@anuff.com" );//String.format( "test%i@anuff.com", i ) );
             entity[i] = em.create( "newOrg", userProperties );
+            Thread.sleep(100);
         }
 
         S3Export s3Export = new MockS3ExportImpl("exportOneOrganization.json" );
@@ -604,10 +605,13 @@ public class ExportServiceIT {
         ApplicationInfo appMade = null;
         for ( int i = 0; i < 10; i++ ) {
             orgMade = setup.getMgmtSvc().createOrganization( "superboss" + i, adminUser, true );
+            Thread.sleep(100);
             appMade = setup.getMgmtSvc().createApplication( orgMade.getUuid(), "superapp" + i );
+            Thread.sleep(100);
 
             EntityManager customMaker = setup.getEmf().getEntityManager( appMade.getId() );
             customMaker.createApplicationCollection( "superappCol" + i );
+            Thread.sleep(10);
             //intialize user object to be posted
             Map<String, Object> entityLevelProperties = null;
             Entity[] entNotCopied;

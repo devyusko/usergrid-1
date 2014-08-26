@@ -46,7 +46,7 @@ import static org.junit.Assert.assertTrue;
 public abstract class AbstractIteratingQueryIT {
     private static final Logger LOG = LoggerFactory.getLogger( AbstractIteratingQueryIT.class );
 
-    public static final long WRITE_DELAY = 0; // milliseconds to delay between writes in loop
+    public static final long WRITE_DELAY = 2; // milliseconds to delay between writes in loop
 
     @ClassRule
     public static CoreITSetup setup = new CoreITSetupImpl( 
@@ -77,7 +77,7 @@ public abstract class AbstractIteratingQueryIT {
         long stop = System.currentTimeMillis();
 
         LOG.info( "Writes took {} ms", stop - start );
-
+//        Thread.sleep(3000);
         Query query = new Query();
         query.addSort( "created" );
         query.setLimit( queryLimit );
@@ -886,9 +886,9 @@ public abstract class AbstractIteratingQueryIT {
         long start = System.currentTimeMillis();
 
         LOG.info( "Writing {} entities.", size );
-
+        Map<String, Object> entity;
         for ( int i = 0; i < size; i++ ) {
-            Map<String, Object> entity = new HashMap<String, Object>();
+            entity = new HashMap<String, Object>();
             entity.put( "name", String.valueOf( i ) );
 
             io.writeEntity( entity );
@@ -897,8 +897,8 @@ public abstract class AbstractIteratingQueryIT {
         long stop = System.currentTimeMillis();
 
         LOG.info( "Writes took {} ms", stop - start );
-        Thread.sleep(3000);
         app.getEm().refreshIndex();
+        Thread.sleep(3000);
 
         Query query = new Query();
         query.setLimit( 100 );
@@ -1000,7 +1000,7 @@ public abstract class AbstractIteratingQueryIT {
         LOG.info( "Writes took {} ms", stop - start );
 
         app.getEm().refreshIndex();
-
+        Thread.sleep(3000);
         Query query = Query.fromQL( "select * order by boolean desc, index asc" );
         query.setLimit( queryLimit );
 
