@@ -34,7 +34,7 @@
         <!-- If you got the resources, max parallelism = 6 forks -->
         <rest.it.forkCount>2</rest.it.forkCount>
         <rest.it.reuseForks>false</rest.it.reuseForks>
-        <rest.it.parallel>suites</rest.it.parallel>
+        <rest.it.parallel>suitesAndClasses</rest.it.parallel>
     </properties>
 
     <profiles>

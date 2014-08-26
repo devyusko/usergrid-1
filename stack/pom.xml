@@ -85,8 +85,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- you can override these via MAVEN_OPTS -->
-    <ug.heapmax>8192m</ug.heapmax>
-    <ug.heapmin>1024m</ug.heapmin>
+    <ug.heapmax>4096m</ug.heapmax>
+    <ug.heapmin>2048m</ug.heapmin>
 
     <usergrid-custom-spring-properties>classpath:/usergrid-custom.properties</usergrid-custom-spring-properties>
     <usergrid-custom-spring-test-properties>classpath:/usergrid-custom-test.properties</usergrid-custom-spring-test-properties>
@@ -116,9 +116,9 @@
     <tika.version>1.4</tika.version>
     <elasticsearch.version>1.2.3</elasticsearch.version>
 
-    <usergrid.it.forkCount>6</usergrid.it.forkCount>
+    <usergrid.it.forkCount>3</usergrid.it.forkCount>
     <usergrid.it.reuseForks>false</usergrid.it.reuseForks>
-    <usergrid.it.parallel>suites</usergrid.it.parallel>
+    <usergrid.it.parallel>suitesAndClasses</usergrid.it.parallel>
 
   </properties>
 

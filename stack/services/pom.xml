@@ -26,9 +26,9 @@
 
   <!-- Override these properties in your settings.xml in an active profile -->
   <properties>
-    <services.it.forkCount>1</services.it.forkCount>
+    <services.it.forkCount>6</services.it.forkCount>
     <services.it.reuseForks>true</services.it.reuseForks>
-    <services.it.parallel>suites</services.it.parallel>
+    <services.it.parallel>suitesAndClasses</services.it.parallel>
   </properties>
 
   <artifactId>usergrid-services</artifactId>
