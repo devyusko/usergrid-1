@@ -554,12 +554,12 @@ public class Results implements Iterable<Entity> {
          * (Entity e : l) { if (!eMap.containsKey(e.getUuid())) { entities.add(e);
          * eMap.put(e.getUuid(), e); } } } } return entities; }
          */
+        entities = new ArrayList<Entity>();
         if ( entity != null ) {
-            entities = new ArrayList<Entity>();
             entities.add( entity );
             return entities;
         }
-        return new ArrayList<Entity>();
+        return entities;
     }
 
 
