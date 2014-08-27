@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.apache.usergrid.persistence.collection.CollectionScope;
 import org.apache.usergrid.persistence.collection.exception.WriteStartException;
 import org.apache.usergrid.persistence.collection.mvcc.MvccLogEntrySerializationStrategy;
@@ -22,6 +21,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.netflix.astyanax.MutationBatch;
 import com.netflix.astyanax.connectionpool.exceptions.ConnectionException;
+import com.netflix.astyanax.retry.BoundedExponentialBackoff;
+import com.netflix.astyanax.retry.RetryPolicy;
 
 import rx.functions.Func1;
 
@@ -38,7 +39,7 @@ public class WriteStart implements Func1<CollectionIoEvent<Entity>, CollectionIo
     private final MvccLogEntrySerializationStrategy logStrategy;
 
     MvccEntity.Status status;
-
+    private RetryPolicy rp = new BoundedExponentialBackoff(10L, 1000L, 30);
 
     /**
      * Create a new stage with the current context and status for entity.
@@ -70,19 +71,22 @@ public class WriteStart implements Func1<CollectionIoEvent<Entity>, CollectionIo
             final MvccEntityImpl nextStage =
                              new MvccEntityImpl( entityId, version, status, entity );
 
-
             try {
-                write.execute();
+            	if (!write.isEmpty()){
+                    write
+                	.withRetryPolicy(rp)
+                	.execute();
+            	}            	
             }
             catch ( ConnectionException e ) {
                 LOG.error( "Failed to execute write ", e );
                 throw new WriteStartException( nextStage, collectionScope,
-                        "Failed to execute write ", e );
+                		e.getClass().getName()+" Failed to execute write ", e );
             }
             catch ( NullPointerException e) {
                 LOG.error( "Failed to execute write ", e );
-                throw new WriteStartException( nextStage, collectionScope,
-                        "Failed to execute write", e);
+//                throw new WriteStartException( nextStage, collectionScope,
+//                        e.getClass().getName()+" Failed to execute write", e);
             }
 
 
