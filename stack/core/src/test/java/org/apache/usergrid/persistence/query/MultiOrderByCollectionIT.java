@@ -17,11 +17,13 @@
 package org.apache.usergrid.persistence.query;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
 /** @author tnine */
 public class MultiOrderByCollectionIT extends AbstractIteratingQueryIT {
+	@Ignore
     @Test
     public void multiOrderByCollection() throws Exception {
         multiOrderBy( new CollectionIoHelper( app ) );

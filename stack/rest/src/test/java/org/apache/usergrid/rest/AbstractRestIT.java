@@ -27,6 +27,7 @@ import com.sun.jersey.test.framework.AppDescriptor;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import com.sun.jersey.test.framework.spi.container.TestContainerFactory;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLClassLoader;
@@ -34,14 +35,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
+
 import org.apache.usergrid.java.client.Client;
+
 import static org.apache.usergrid.utils.JsonUtils.mapToFormattedJsonString;
 import static org.apache.usergrid.utils.MapUtils.hashMap;
+
 import org.junit.AfterClass;
+
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.slf4j.Logger;
@@ -445,7 +452,12 @@ public abstract class AbstractRestIT extends JerseyTest {
             LOG.debug("Error refreshing index", e);
             return;
         }
-
+        try {
+			Thread.sleep(1000L);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         LOG.debug("Refreshed index for app {}/{}", orgName, appName );
     }
 

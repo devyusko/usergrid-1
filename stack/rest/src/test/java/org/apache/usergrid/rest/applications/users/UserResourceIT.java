@@ -412,16 +412,22 @@ public class UserResourceIT extends AbstractRestIT {
         int orderedSize = response.getEntities().size();
 
         assertEquals( "Sizes match", nonOrderedSize, orderedSize );
+        if(userId1.variant()==2){
+        	List<Entity> entities = response.getEntities();
+            assertTrue( "Ordered correctly 1", entities.get(0).getUuid().timestamp() < entities.get(1).getUuid().timestamp() );
 
-        int firstEntityIndex = getEntityIndex( userId1, response );
+            assertTrue( "Ordered correctly 2", entities.get(1).getUuid().timestamp() < entities.get(2).getUuid().timestamp() );
+        }else{
+            int firstEntityIndex = getEntityIndex( userId1, response );
 
-        int secondEntityIndex = getEntityIndex( userId2, response );
+            int secondEntityIndex = getEntityIndex( userId2, response );
 
-        int thirdEntityIndex = getEntityIndex( userId3, response );
+            int thirdEntityIndex = getEntityIndex( userId3, response );
+            
+            assertTrue( "Ordered correctly 1", firstEntityIndex < secondEntityIndex );
 
-        assertTrue( "Ordered correctly", firstEntityIndex < secondEntityIndex );
-
-        assertTrue( "Ordered correctly", secondEntityIndex < thirdEntityIndex );
+            assertTrue( "Ordered correctly 2", secondEntityIndex < thirdEntityIndex );
+        }
     }
 
 
