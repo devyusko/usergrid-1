@@ -453,11 +453,8 @@ public abstract class AbstractRestIT extends JerseyTest {
             return;
         }
         try {
-			Thread.sleep(1000L);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			Thread.sleep(3000L);
+		} catch (InterruptedException ignored) {}
         LOG.debug("Refreshed index for app {}/{}", orgName, appName );
     }
 
