@@ -898,7 +898,6 @@ public abstract class AbstractIteratingQueryIT {
 
         LOG.info( "Writes took {} ms", stop - start );
         app.getEm().refreshIndex();
-        Thread.sleep(3000);
 
         Query query = new Query();
         query.setLimit( 100 );
@@ -910,7 +909,7 @@ public abstract class AbstractIteratingQueryIT {
         start = System.currentTimeMillis();
 
         do {
-
+        	Thread.sleep(1000);
             // now do simple ordering, should be returned in order
             results = io.getResults( query );
 
@@ -921,7 +920,7 @@ public abstract class AbstractIteratingQueryIT {
 
             query.setCursor( results.getCursor() );
         }
-        while ( results.getCursor() != null );
+        while ( results.getCursor() != null && !results.getCursor().equals("") );
 
         stop = System.currentTimeMillis();
         LOG.info( "Query took {} ms to return {} entities", stop - start, count );
@@ -1104,7 +1103,8 @@ public abstract class AbstractIteratingQueryIT {
         long stop = System.currentTimeMillis();
 
         LOG.info( "Writes took {} ms", stop - start );
-
+        //An extra wait for cassandra to catch up
+        Thread.sleep(5000L);
         app.getEm().refreshIndex();
 
         Query query =

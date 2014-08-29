@@ -24,6 +24,7 @@ import org.apache.usergrid.cassandra.SchemaManager;
 import org.apache.usergrid.persistence.cassandra.CassandraService;
 
 import me.prettyprint.hector.api.Cluster;
+
 import org.apache.usergrid.persistence.cassandra.Setup;
 
 
@@ -49,6 +50,10 @@ public class CoreSchemaManager implements SchemaManager {
         }
         catch ( Exception ex ) {
             LOG.error( "Could not setup usergrid core schema", ex );
+//            try {
+//				Thread.sleep(3000);
+//	            create();
+//			} catch (InterruptedException ignored) {}
         }
     }
 
@@ -73,8 +78,12 @@ public class CoreSchemaManager implements SchemaManager {
     @Override
     public void destroy() {
         LOG.info( "dropping keyspaces" );
-        cluster.dropKeyspace( CassandraService.SYSTEM_KEYSPACE );
-        cluster.dropKeyspace( CassandraService.STATIC_APPLICATION_KEYSPACE );
+        try {
+	        cluster.dropKeyspace( CassandraService.SYSTEM_KEYSPACE );
+	        cluster.dropKeyspace( CassandraService.STATIC_APPLICATION_KEYSPACE );
+        } catch (Exception ignored) {
+        	LOG.error("Ignored errors while dropping keyspaces." + ignored.getMessage());
+        }
         LOG.info( "keyspaces dropped" );
     }
 }

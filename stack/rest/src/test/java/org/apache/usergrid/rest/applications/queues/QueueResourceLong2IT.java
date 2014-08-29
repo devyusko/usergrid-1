@@ -59,7 +59,7 @@ public class QueueResourceLong2IT extends AbstractQueueResourceIT {
 
         // now consume and make sure we get each message. We should receive each
         // message, and we'll use this for comparing results later
-        final long timeout = 20000;
+        final long timeout = 30000;
 
         // read 50 messages at a time
         queue = queue.withTimeout( timeout ).withLimit( 50 );

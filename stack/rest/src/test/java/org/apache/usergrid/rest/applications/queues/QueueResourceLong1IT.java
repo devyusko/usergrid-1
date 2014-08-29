@@ -41,7 +41,6 @@ public class QueueResourceLong1IT extends AbstractQueueResourceIT {
     @Rule
     public TestContextSetup context = new TestContextSetup( this );
 
-
     @Test
     public void transactionTimeout() throws InterruptedException, IOException {
 
@@ -57,7 +56,7 @@ public class QueueResourceLong1IT extends AbstractQueueResourceIT {
 
         // now consume and make sure we get each message. We should receive each
         // message, and we'll use this for comparing results later
-        final long timeout = 5000;
+        final long timeout = 30000;
 
         queue = queue.withTimeout( timeout );
 
