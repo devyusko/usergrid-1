@@ -171,7 +171,7 @@
     <developer>
       <id>snoopdave</id>
       <name>Dave Johnson</name>
-    </developer> 
+    </developer>
   </developers>
 
 
@@ -207,7 +207,7 @@
     <module>launcher</module>
     -->
     <module>mongo-emulator</module>
-    <!--  
+    <!--
     Re-enable when query-validator updated to work with Core Persistence.
     https://issues.apache.org/jira/browse/USERGRID-221
     <module>query-validator</module>
@@ -1447,7 +1447,24 @@
           <artifactId>sonar-maven-plugin</artifactId>
           <version>2.1</version>
         </plugin>
-
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+                <formats>
+                    <format>xml</format>
+                </formats>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>cobertura</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
         <!--
                 <plugin>
                   <groupId>com.structure101.java</groupId>
