@@ -20,13 +20,13 @@
     "RestMinServers": {
       "Description": "Minimum number of REST servers.",
       "Type": "Number",
-      "Default": "1",
+      "Default": "6",
       "MinValue": "6"
     },
     "RestMaxServers": {
       "Description": "Maximum number REST servers.",
       "Type": "Number",
-      "Default": "3",
+      "Default": "6",
       "MinValue": "6"
     },
     "RestInstanceType": {
