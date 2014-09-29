@@ -21,7 +21,7 @@
       "Description": "Minimum number of REST servers.",
       "Type": "Number",
       "Default": "6",
-      "MinValue": "6"
+      "MinValue": "4"
     },
     "RestMaxServers": {
       "Description": "Maximum number REST servers.",
@@ -80,8 +80,8 @@
     "CassReplicationFactor": {
       "Description": "Cassandra replication factor",
       "Type": "Number",
-      "Default": "3",
-      "MinValue": "1"
+      "Default": "4",
+      "MinValue": "300"
     },
     "SuperUserEmail": {
       "Description": "Email for superuser user",
