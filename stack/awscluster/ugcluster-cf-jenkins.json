@@ -58,7 +58,7 @@
     "CassNumServers": {
       "Description": "Number of Cass servers to start.",
       "Type": "Number",
-      "Default": "3",
+      "Default": "6",
       "MinValue": "6"
     },
     "CassInstanceType": {
