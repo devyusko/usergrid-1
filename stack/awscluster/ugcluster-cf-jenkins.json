@@ -80,8 +80,8 @@
     "CassReplicationFactor": {
       "Description": "Cassandra replication factor",
       "Type": "Number",
-      "Default": "4",
-      "MinValue": "3"
+      "Default": "3",
+      "MinValue": "2"
     },
     "SuperUserEmail": {
       "Description": "Email for superuser user",
