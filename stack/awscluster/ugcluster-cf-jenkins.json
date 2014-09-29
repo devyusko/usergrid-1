@@ -81,7 +81,7 @@
       "Description": "Cassandra replication factor",
       "Type": "Number",
       "Default": "4",
-      "MinValue": "300"
+      "MinValue": "3"
     },
     "SuperUserEmail": {
       "Description": "Email for superuser user",
