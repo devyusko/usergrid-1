@@ -18,19 +18,24 @@
 
 package org.apache.usergrid.persistence.index.impl;
 
-import com.google.common.base.Joiner;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.UUID;
+
+import org.elasticsearch.common.unit.DistanceUnit;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.apache.usergrid.persistence.index.exceptions.IndexException;
 import org.apache.usergrid.persistence.index.exceptions.NoFullTextIndexException;
 import org.apache.usergrid.persistence.index.exceptions.NoIndexException;
-import org.apache.usergrid.persistence.index.exceptions.IndexException;
-import static org.apache.usergrid.persistence.index.impl.EsEntityIndexImpl.ANALYZED_STRING_PREFIX;
-import static org.apache.usergrid.persistence.index.impl.EsEntityIndexImpl.BOOLEAN_PREFIX;
-import static org.apache.usergrid.persistence.index.impl.EsEntityIndexImpl.GEO_PREFIX;
-import static org.apache.usergrid.persistence.index.impl.EsEntityIndexImpl.NUMBER_PREFIX;
-import static org.apache.usergrid.persistence.index.impl.EsEntityIndexImpl.STRING_PREFIX;
 import org.apache.usergrid.persistence.index.query.tree.AndOperand;
 import org.apache.usergrid.persistence.index.query.tree.ContainsOperand;
 import org.apache.usergrid.persistence.index.query.tree.Equal;
@@ -42,14 +47,14 @@ import org.apache.usergrid.persistence.index.query.tree.NotOperand;
 import org.apache.usergrid.persistence.index.query.tree.OrOperand;
 import org.apache.usergrid.persistence.index.query.tree.QueryVisitor;
 import org.apache.usergrid.persistence.index.query.tree.WithinOperand;
-import org.elasticsearch.common.unit.DistanceUnit;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Joiner;
+
+import static org.apache.usergrid.persistence.index.impl.IndexingUtils.ANALYZED_STRING_PREFIX;
+import static org.apache.usergrid.persistence.index.impl.IndexingUtils.BOOLEAN_PREFIX;
+import static org.apache.usergrid.persistence.index.impl.IndexingUtils.GEO_PREFIX;
+import static org.apache.usergrid.persistence.index.impl.IndexingUtils.NUMBER_PREFIX;
+import static org.apache.usergrid.persistence.index.impl.IndexingUtils.STRING_PREFIX;
 
 
 /**
@@ -214,6 +219,7 @@ public class EsQueryVistor implements QueryVisitor {
             String svalue = (String)value;
 
             BoolQueryBuilder qb = QueryBuilders.boolQuery();  // let's do a boolean OR
+            qb.minimumNumberShouldMatch(1); 
 
             // field is an entity/array that does not need a prefix on its name
             qb = qb.should( QueryBuilders.wildcardQuery( name, svalue ) );
@@ -264,7 +270,6 @@ public class EsQueryVistor implements QueryVisitor {
 
         // logic to deal with nested property names
         // only add prefix to last name in property
-
         String[] parts = origname.split("\\.");
         if ( parts.length > 1 ) {
             name = parts[ parts.length - 1 ];
@@ -286,6 +291,7 @@ public class EsQueryVistor implements QueryVisitor {
             name = addStringPrefix( name );
         }
 
+        // re-create nested property name 
         if ( parts.length > 1 ) {
             parts[parts.length - 1] = name;
             Joiner joiner = Joiner.on(".").skipNulls();
