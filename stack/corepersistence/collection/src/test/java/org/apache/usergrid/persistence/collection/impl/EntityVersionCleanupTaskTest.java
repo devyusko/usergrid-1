@@ -232,9 +232,9 @@ public class EntityVersionCleanupTaskTest {
         future.get();
 
         //verify it was run
-        verify( entityBatch, never() ).execute();
+        verify( entityBatch, times(1) ).execute();
 
-        verify( logBatch, never() ).execute();
+        verify( logBatch, times(1) ).execute();
     }
 
 

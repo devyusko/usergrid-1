@@ -25,6 +25,7 @@ import java.util.UUID;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+
 import org.apache.usergrid.persistence.collection.mvcc.entity.MvccEntity;
 import org.apache.usergrid.persistence.collection.serialization.UniqueValue;
 import org.apache.usergrid.persistence.collection.serialization.UniqueValueSerializationStrategy;
@@ -33,7 +34,6 @@ import org.apache.usergrid.persistence.model.entity.Entity;
 import org.apache.usergrid.persistence.model.field.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.apache.usergrid.persistence.collection.CollectionScope;
 import org.apache.usergrid.persistence.collection.event.EntityVersionDeleted;
 import org.apache.usergrid.persistence.collection.mvcc.MvccEntitySerializationStrategy;
@@ -111,6 +111,8 @@ public class EntityVersionCleanupTask implements Task<Void> {
     public Void rejected() {
         //Our task was rejected meaning our queue was full.  We need this operation to run,
         // so we'll run it in our current thread
+    	LOG.warn( "Entity cleanup task was rejected for collection {} with entity {} and version {}",
+                new Object[] { scope, entityId, version } );
         try {
             call();
         }
@@ -126,76 +128,77 @@ public class EntityVersionCleanupTask implements Task<Void> {
     public Void call() throws Exception {
         //TODO Refactor this logic into a a class that can be invoked from anywhere
         //load every entity we have history of
+//    	throw new Exception("I CAN HAZ ERROR? "+this.entityId+" "+this.version);
         Observable<List<MvccEntity>> deleteFieldsObservable =
                 Observable.create(new ObservableIterator<MvccEntity>("deleteColumns") {
                     @Override
                     protected Iterator<MvccEntity> getIterator() {
-                        Iterator<MvccEntity> entities =  entitySerializationStrategy.load(scope, entityId, version, serializationFig.getBufferSize());
+                    	LOG.debug("Returning iterator for {}", entityId);
+                        Iterator<MvccEntity> entities = entitySerializationStrategy.load(scope, entityId, version, serializationFig.getBufferSize());
                         return entities;
                     }
-                })       //buffer them for efficiency
-                        .skip(1)
-                        .buffer(serializationFig.getBufferSize()).doOnNext(
-                        new Action1<List<MvccEntity>>() {
-                            @Override
-                            public void call(final List<MvccEntity> mvccEntities) {
-                                final MutationBatch batch = keyspace.prepareMutationBatch();
-                                final MutationBatch entityBatch = keyspace.prepareMutationBatch();
-                                final MutationBatch logBatch = keyspace.prepareMutationBatch();
+                })
+                .skip(1)
+                .buffer(serializationFig.getBufferSize())//buffer them for efficiency
+                .doOnNext(
+    	                new Action1<List<MvccEntity>>() {
+    	                    @Override
+    	                    public void call(final List<MvccEntity> mvccEntities) {
+    	                        final MutationBatch batch = keyspace.prepareMutationBatch();
+    	                        final MutationBatch entityBatch = keyspace.prepareMutationBatch();
+    	                        final MutationBatch logBatch = keyspace.prepareMutationBatch();
+    	
+    	                        for (MvccEntity mvccEntity : mvccEntities) {
+    	                            if (!mvccEntity.getEntity().isPresent()) {
+    	                                continue;
+    	                            }
+    	
+    	                            final UUID entityVersion = mvccEntity.getVersion();
+    	                            final Entity entity = mvccEntity.getEntity().get();
+    	
+    	                            //remove all unique fields from the index
+    	                            for (final Field field : entity.getFields()) {
+    	                                if (!field.isUnique()) {
+    	                                    continue;
+    	                                }
+    	                                final UniqueValue unique = new UniqueValueImpl(scope, field, entityId, entityVersion);
+    	                                final MutationBatch deleteMutation = uniqueValueSerializationStrategy.delete(unique);
+    	                                batch.mergeShallow(deleteMutation);
+    	                            }
+    	
+    	                            final MutationBatch entityDelete = entitySerializationStrategy.delete(scope, entityId, mvccEntity.getVersion());
+    	                            entityBatch.mergeShallow(entityDelete);
+    	                            final MutationBatch logDelete = logEntrySerializationStrategy.delete(scope, entityId, version);
+    	                            logBatch.mergeShallow(logDelete);
+    	                        }
+    	
+    	                        try {
+    	                            batch.execute();
+    	                        } catch (ConnectionException e1) {
+    	                            throw new RuntimeException("Unable to execute unique value delete", e1);
+    	                        }
+    	                        fireEvents(mvccEntities);
+    	                        try {
+    	                            entityBatch.execute();
+    	                        } catch (ConnectionException e) {
+    	                            throw new RuntimeException("Unable to delete entities in cleanup", e);
+    	                        }
+    	
+    	                        try {
+    	                            logBatch.execute();
+    	                        } catch (ConnectionException e) {
+    	                            throw new RuntimeException("Unable to delete entities from the log", e);
+    	                        }
+    	
+    	                    }
+    	                }
+                    );
+					final int removedCount = deleteFieldsObservable.count().toBlocking().last();
+					
+					LOG.debug("Removed unique values for {} entities of entity {}",removedCount,entityId);
 
-                                for (MvccEntity mvccEntity : mvccEntities) {
-                                    if (!mvccEntity.getEntity().isPresent()) {
-                                        continue;
-                                    }
+						
 
-                                    final UUID entityVersion = mvccEntity.getVersion();
-                                    final Entity entity = mvccEntity.getEntity().get();
-
-                                    //remove all unique fields from the index
-                                    for (final Field field : entity.getFields()) {
-                                        if (!field.isUnique()) {
-                                            continue;
-                                        }
-                                        final UniqueValue unique = new UniqueValueImpl(scope, field, entityId, entityVersion);
-                                        final MutationBatch deleteMutation = uniqueValueSerializationStrategy.delete(unique);
-                                        batch.mergeShallow(deleteMutation);
-                                    }
-
-                                    final MutationBatch entityDelete = entitySerializationStrategy.delete(scope, entityId, mvccEntity.getVersion());
-                                    entityBatch.mergeShallow(entityDelete);
-                                    final MutationBatch logDelete = logEntrySerializationStrategy.delete(scope, entityId, version);
-                                    logBatch.mergeShallow(logDelete);
-                                }
-
-                                try {
-                                    batch.execute();
-                                } catch (ConnectionException e1) {
-                                    throw new RuntimeException("Unable to execute " +
-                                            "unique value " +
-                                            "delete", e1);
-                                }
-                                fireEvents(mvccEntities);
-                                try {
-                                    entityBatch.execute();
-                                } catch (ConnectionException e) {
-                                    throw new RuntimeException("Unable to delete entities in cleanup", e);
-                                }
-
-                                try {
-                                    logBatch.execute();
-                                } catch (ConnectionException e) {
-                                    throw new RuntimeException("Unable to delete entities from the log", e);
-                                }
-
-                            }
-                        }
-
-
-                );
-
-        final int removedCount = deleteFieldsObservable.count().toBlocking().last();
-
-        LOG.debug("Removed unique values for {} entities of entity {}",removedCount,entityId);
 
         return null;
     }
