@@ -302,7 +302,7 @@
                 }, "/aws-init-scripts.tgz\n",
                 "s3cmd --config=/etc/s3cfg get s3://", {
                   "Ref": "ReleaseBucket"
-                }, "ROOT-grindr-prod-2014-10-10.war\n",
+                }, "/ROOT-grindr-prod-2014-10-10.war\n",
                 "tar xvf aws-init-scripts.tgz\n",
                 "rm -fr aws-init-scripts.tgz\n",
                 "mv ROOT-grindr-prod-2014-10-10.war webapps/ROOT.war\n",
@@ -534,7 +534,7 @@
                 }, "/aws-init-scripts.tgz\n",
                 "s3cmd --config=/etc/s3cfg get s3://", {
                   "Ref": "ReleaseBucket"
-                }, "ROOT-grindr-prod-2014-10-10.war\n",
+                }, "/ROOT-grindr-prod-2014-10-10.war\n",
                 "tar xvf aws-init-scripts.tgz\n",
                 "rm -fr aws-init-scripts.tgz\n",
                 "mv ROOT-grindr-prod-2014-10-10.war webapps/ROOT.war\n",
@@ -725,7 +725,7 @@
                 }, "/aws-init-scripts.tgz\n",
                 "s3cmd --config=/etc/s3cfg get s3://", {
                   "Ref": "ReleaseBucket"
-                }, "ROOT-grindr-prod-2014-10-10.war\n",
+                }, "/ROOT-grindr-prod-2014-10-10.war\n",
                 "tar xvf aws-init-scripts.tgz\n",
                 "rm -fr aws-init-scripts.tgz\n",
                 "mv ROOT-grindr-prod-2014-10-10.war webapps/ROOT.war\n",
