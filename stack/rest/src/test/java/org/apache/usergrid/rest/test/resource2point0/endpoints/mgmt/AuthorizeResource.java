@@ -17,27 +17,43 @@
  *  * directory of this distribution.
  *
  */
-
 package org.apache.usergrid.rest.test.resource2point0.endpoints.mgmt;
 
+import com.sun.jersey.api.client.GenericType;
 import org.apache.usergrid.rest.test.resource2point0.endpoints.NamedResource;
 import org.apache.usergrid.rest.test.resource2point0.endpoints.UrlResource;
-import org.apache.usergrid.rest.test.resource2point0.model.Application;
 import org.apache.usergrid.rest.test.resource2point0.state.ClientContext;
 
-import javax.ws.rs.core.MediaType;
-
 /**
- * Classy class class.
+ * OAuth authorization resource
  */
-public class ApplicationResource extends NamedResource {
-    public ApplicationResource(ClientContext context, UrlResource parent) {
-        super("applications", context, parent);
+public class AuthorizeResource extends NamedResource {
+    public AuthorizeResource(final ClientContext context, final UrlResource parent) {
+        super("authorize", context, parent);
     }
 
-    public void post(Application application) {
-        getResource(true).type(MediaType.APPLICATION_JSON_TYPE)
-            .accept(MediaType.APPLICATION_JSON).post(application);
+    /**
+     * Obtains an OAuth authorization
+     *
+     * @param requestEntity
+     * @return
+     */
+    public Object post(Object requestEntity) {
+        return getResource().post(Object.class, requestEntity);
+
+    }
+
+    /**
+     * Obtains an OAuth authorization
+     *
+     * @param type
+     * @param requestEntity
+     * @return
+     */
+    public <T> T post(Class<T> type, Object requestEntity) {
+        GenericType<T> gt = new GenericType<>((Class) type);
+        return getResource().post(gt.getRawClass(), requestEntity);
+
     }
 
 }

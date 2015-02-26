@@ -18,26 +18,30 @@
  *
  */
 
-package org.apache.usergrid.rest.test.resource2point0.endpoints.mgmt;
+package org.apache.usergrid.rest.test.resource2point0.model;
 
-import org.apache.usergrid.rest.test.resource2point0.endpoints.NamedResource;
-import org.apache.usergrid.rest.test.resource2point0.endpoints.UrlResource;
-import org.apache.usergrid.rest.test.resource2point0.model.Application;
-import org.apache.usergrid.rest.test.resource2point0.state.ClientContext;
-
-import javax.ws.rs.core.MediaType;
+import java.util.Map;
 
 /**
- * Classy class class.
  */
-public class ApplicationResource extends NamedResource {
-    public ApplicationResource(ClientContext context, UrlResource parent) {
-        super("applications", context, parent);
+public class Credentials extends Entity {
+    public Credentials() {
     }
 
-    public void post(Application application) {
-        getResource(true).type(MediaType.APPLICATION_JSON_TYPE)
-            .accept(MediaType.APPLICATION_JSON).post(application);
+    public Credentials(ApiResponse response) {
+        setResponse(response, "credentials");
     }
 
+    public Credentials mapOrgResponse(Map<String, Object> map) {
+        putAll((Map<String, Object>) map.get("credentials"));
+        return this;
+    }
+
+    public String getClientSecret() {
+        return (String) get("secret");
+    }
+
+    public String getClientId() {
+        return (String) get("id");
+    }
 }
